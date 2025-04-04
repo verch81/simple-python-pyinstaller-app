@@ -31,4 +31,33 @@ pipeline {
             }
         }        
     }
+    post {
+        success {
+            emailext(
+                subject: 'SUCCESS: Job ${JOB_NAME} Build #${BUILD_NUMBER}',
+                body: ''' Scope: Hillel homework #31.
+Good news! 
+The build was successful.
+
+Job Name: ${JOB_NAME}
+Build Number: ${BUILD_NUMBER}
+Build URL: ${BUILD_URL}''',
+                to: 'vierovkin@gmail.com'
+            )
+        }
+        failure {
+            emailext(
+                subject: 'FAILURE: Job ${JOB_NAME} Build #${BUILD_NUMBER}',
+                body: ''' Scope: Hillel homework #31.
+Oops! 
+
+The build failed.
+
+Job Name: ${JOB_NAME}
+Build Number: ${BUILD_NUMBER}
+Build URL: ${BUILD_URL}''',
+                to: 'vierovkin@gmail.com'
+            )
+        }
+    }
 }
